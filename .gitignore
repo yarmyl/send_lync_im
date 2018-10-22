@@ -1,0 +1,8 @@
+*.pyc
+*~
+__pycashe__
+*.bak
+*.conf
+*#
+send_im.py
+send_2im.py

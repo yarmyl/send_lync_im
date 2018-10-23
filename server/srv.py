@@ -3,6 +3,13 @@
 
 import socket
 import lync
+import argparse
+
+def createParser ():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--srv', nargs='?') # сервер
+    parser.add_argument('--port', nargs='?') # port сервера
+    return parser
 
 def check_true_sip_data(str):
     if len(str.split('+++>')) == 2:
@@ -19,7 +26,11 @@ def check_true_user_data(str):
 def main():
     myLync = lync.Lync()
     sock = socket.socket()
-    sock.bind(('', 1112))
+    parser = createParser()
+    namespace = parser.parse_args()
+    srv = namespace.srv if namespace.srv else ""
+    port = int(namespace.port) if namespace.port else 1112
+    sock.bind((srv, port))
     sock.listen(10)
     while True:
         conn, addr = sock.accept()

@@ -11,11 +11,12 @@ def createParser ():
     parser.add_argument('--srv', nargs='?') # сервер
     parser.add_argument('--users', action='store_true') # список пользователей
     parser.add_argument('--sip', nargs='?') # по sip
+    parser.add_argument('--port', nargs='?') # port сервера
     return parser
 
-def send_mess(srv, mess):
+def send_mess(srv, port, mess):
     sock = socket.socket()
-    sock.connect((srv, 1112))
+    sock.connect((srv, port))
     sock.send(bytes(mess, "utf8"))
     data = sock.recv(2048)
     sock.close()
@@ -25,17 +26,15 @@ def send_mess(srv, mess):
 def main():
     parser = createParser()
     namespace = parser.parse_args()
-    if namespace.srv:
-        srv = namespace.srv
-    else:
-        srv = '127.0.0.1'
+    srv = namespace.srv if namespace.srv else '127.0.0.1'
+    port = int(namespace.port) if namespace.port else 1112
     if namespace.users:
-        print(send_mess(srv, "print users"))
+        print(send_mess(srv, port, "print users"))
     elif namespace.mess:
         if namespace.to:
-            print(send_mess(srv, namespace.mess + '--->' + namespace.to))
+            print(send_mess(srv, port, namespace.mess + '--->' + namespace.to))
         elif namespace.sip:
-            print(send_mess(srv, namespace.mess + '+++>' + namespace.sip))
+            print(send_mess(srv, port, namespace.mess + '+++>' + namespace.sip))
         else:
             print("Bad type!")
     else:

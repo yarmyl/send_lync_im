@@ -7,6 +7,7 @@ import argparse
 def createParser ():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mess', nargs='?') # сообщение
+    parser.add_argument('message', nargs='?') # сообщение
     parser.add_argument('--to', nargs='?') # адресат
     parser.add_argument('--srv', nargs='?') # сервер
     parser.add_argument('--users', action='store_true') # список пользователей
@@ -30,11 +31,12 @@ def main():
     port = int(namespace.port) if namespace.port else 1112
     if namespace.users:
         print(send_mess(srv, port, "print users"))
-    elif namespace.mess:
+    elif namespace.mess or namespace.message:
+        mess = namespace.message if namespace.message else namespace.mess
         if namespace.to:
-            print(send_mess(srv, port, namespace.mess + '--->' + namespace.to))
+            print(send_mess(srv, port, mess + '--->' + namespace.to))
         elif namespace.sip:
-            print(send_mess(srv, port, namespace.mess + '+++>' + namespace.sip))
+            print(send_mess(srv, port, mess + '+++>' + namespace.sip))
         else:
             print("Bad type!")
     else:

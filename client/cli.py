@@ -13,6 +13,7 @@ def createParser ():
     parser.add_argument('--users', action='store_true') # список пользователей
     parser.add_argument('--sip', nargs='?') # по sip
     parser.add_argument('--port', nargs='?') # port сервера
+    parser.add_argument('--update', action='store_true') # update
     return parser
 
 def send_mess(srv, port, mess):
@@ -31,6 +32,8 @@ def main():
     port = int(namespace.port) if namespace.port else 1112
     if namespace.users:
         print(send_mess(srv, port, "print users"))
+    elif namespace.update:
+        print(send_mess(srv, port, "update"))
     elif namespace.mess or namespace.message:
         mess = namespace.message if namespace.message else namespace.mess
         if namespace.to:

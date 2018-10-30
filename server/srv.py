@@ -53,6 +53,9 @@ def main():
             elif data == "print users":
                 conn.send(bytes(myLync.users(), "utf8"))
                 print("Success!")
+            elif data == "update":
+                del myLync
+                myLync = lync.Lync()
             elif check_true_sip_data(data):
                 myLync.sendIm(data.split('+++>')[1], data.split('+++>')[0] +
                     " (Это сообщение было отправленно с сервера)", 1)

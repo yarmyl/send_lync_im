@@ -1,6 +1,4 @@
-# lync_sender_client
-
-## USAGE
+# USAGE
 
 **usage:** srv.py [--srv [SRV]] [--port [PORT]]              
 

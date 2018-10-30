@@ -1,6 +1,4 @@
-# lync_sender_client
-
-## USAGE
+# USAGE
 
 **usage:** cli.py [-h] [--mess [MESS]] [--to [TO]] [--srv [SRV]] [--users]
               [--sip [SIP]] [--port [PORT]]              
